@@ -31,5 +31,10 @@ describe('DbLoadArticleById UseCase', () => {
     expect(promise).rejects.toThrow()
   })
 
-  it.todo('Should return article if LoadArticleByIdRepository returns article')
+  it('Should return article if LoadArticleByIdRepository returns article', async () => {
+    const { sut, loadArticleByIdRepositorySpy } = makeSut()
+    const id = Math.random().toString()
+    const article = await sut.load(id)
+    expect(article).toEqual(loadArticleByIdRepositorySpy.resutl)
+  })
 })
