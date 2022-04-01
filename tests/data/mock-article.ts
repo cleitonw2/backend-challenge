@@ -3,7 +3,8 @@ import {
   CountArticlesRepository,
   LoadArticlesRepository,
   LoadArticleByIdRepository,
-  DeleteArticleRepository
+  DeleteArticleRepository,
+  UpdateArticleRepository
 } from '@/data/protocols'
 
 const mokcArticle = (): LoadArticlesRepository.Result => ([{
@@ -54,6 +55,18 @@ export class DeleteArticleRepositorySpy implements DeleteArticleRepository {
 
   async delete (id: number): Promise<void> {
     this.id = id
+    Promise.resolve()
+  }
+}
+
+export class UpdateArticleRepositorySpy implements UpdateArticleRepository {
+  params: UpdateArticleRepository.Params = {
+    id: 1,
+    article: mokcArticle()[0]
+  }
+
+  async update (data: UpdateArticleRepository.Params): Promise<void> {
+    this.params = data
     Promise.resolve()
   }
 }
