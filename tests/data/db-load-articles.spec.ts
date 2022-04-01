@@ -30,5 +30,9 @@ describe('DbLoadArticles UseCase', () => {
     expect(promise).rejects.toThrow()
   })
 
-  it.todo('Should return articles if LoadArticlesRepository returns articles')
+  it('Should return articles if LoadArticlesRepository returns articles', async () => {
+    const { sut, loadArticlesRepositorySpy } = makeSut()
+    const articles = await sut.load()
+    expect(articles).toEqual(loadArticlesRepositorySpy.resutl)
+  })
 })
