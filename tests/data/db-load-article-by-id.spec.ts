@@ -24,7 +24,12 @@ describe('DbLoadArticleById UseCase', () => {
     expect(loadSpy).toHaveBeenCalledWith(id)
   })
 
-  it.todo('Should throw if LoadArticleByIdRepository throws')
+  it('Should throw if LoadArticleByIdRepository throws', () => {
+    const { sut, loadArticleByIdRepositorySpy } = makeSut()
+    jest.spyOn(loadArticleByIdRepositorySpy, 'loadById').mockRejectedValueOnce(new Error())
+    const promise = sut.load('any_id')
+    expect(promise).rejects.toThrow()
+  })
 
   it.todo('Should return article if LoadArticleByIdRepository returns article')
 })
