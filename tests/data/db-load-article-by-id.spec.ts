@@ -19,7 +19,7 @@ describe('DbLoadArticleById UseCase', () => {
   it('Should call LoadArticleByIdRepository whit correct param', async () => {
     const { sut, loadArticleByIdRepositorySpy } = makeSut()
     const loadSpy = jest.spyOn(loadArticleByIdRepositorySpy, 'loadById')
-    const id = Math.random().toString()
+    const id = Math.random()
     await sut.load(id)
     expect(loadSpy).toHaveBeenCalledWith(id)
   })
@@ -27,14 +27,13 @@ describe('DbLoadArticleById UseCase', () => {
   it('Should throw if LoadArticleByIdRepository throws', () => {
     const { sut, loadArticleByIdRepositorySpy } = makeSut()
     jest.spyOn(loadArticleByIdRepositorySpy, 'loadById').mockRejectedValueOnce(new Error())
-    const promise = sut.load('any_id')
+    const promise = sut.load(Math.random())
     expect(promise).rejects.toThrow()
   })
 
   it('Should return article if LoadArticleByIdRepository returns article', async () => {
     const { sut, loadArticleByIdRepositorySpy } = makeSut()
-    const id = Math.random().toString()
-    const article = await sut.load(id)
+    const article = await sut.load(Math.random())
     expect(article).toEqual(loadArticleByIdRepositorySpy.resutl)
   })
 })

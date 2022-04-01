@@ -5,7 +5,7 @@ import { LoadArticleByIdRepository } from '../protocols/load-article-by-id-repos
 export class DbLoadArticleById implements LoadArticleById {
   constructor (private readonly loadArticleByIdRepository: LoadArticleByIdRepository) {}
 
-  async load (id: string): Promise<Article> {
+  async load (id: number): Promise<Article> {
     return this.loadArticleByIdRepository.loadById(id)
   }
 }

@@ -1,4 +1,5 @@
 export type Article = {
+  id: number
   featured?: boolean
   title: string
   url: string

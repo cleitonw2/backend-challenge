@@ -6,6 +6,7 @@ import {
 } from '@/data/protocols'
 
 const mokcArticle = (): LoadArticlesRepository.Result => ([{
+  id: Math.random(),
   title: 'any_title',
   url: 'any_url',
   imageUrl: 'any_img_url',
@@ -42,7 +43,7 @@ export class LoadArticlesRepositorySpy implements LoadArticlesRepository {
 export class LoadArticleByIdRepositorySpy implements LoadArticleByIdRepository {
   resutl: LoadArticleByIdRepository.Result = mokcArticle()[0]
 
-  async loadById (id: string): Promise<LoadArticleByIdRepository.Result> {
+  async loadById (id: number): Promise<LoadArticleByIdRepository.Result> {
     return Promise.resolve(this.resutl)
   }
 }

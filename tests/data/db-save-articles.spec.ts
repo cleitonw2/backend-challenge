@@ -3,6 +3,7 @@ import { Article } from '@/domain/models'
 import { SaveArticlesRepositorySpy } from './mock-article'
 
 const mokcArticle = (): Article => ({
+  id: Math.random(),
   title: 'any_title',
   url: 'any_url',
   imageUrl: 'any_img_url',
