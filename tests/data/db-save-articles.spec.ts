@@ -33,4 +33,11 @@ describe('DbSaveArticles UseCase', () => {
     await sut.save(articles)
     expect(saveArticlesRepositorySpy.params).toEqual(articles)
   })
+
+  it('Should throw if SaveArticlesRepository throws', () => {
+    const { sut, saveArticlesRepositorySpy } = makeSut()
+    jest.spyOn(saveArticlesRepositorySpy, 'save').mockRejectedValueOnce(new Error())
+    const promise = sut.save([mokcArticle()])
+    expect(promise).rejects.toThrow()
+  })
 })
