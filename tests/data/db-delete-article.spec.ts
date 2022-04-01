@@ -23,5 +23,10 @@ describe('DbDeleteArticle UseCase', () => {
     expect(deleteArticleRepositorySpy.id).toBe(id)
   })
 
-  it.todo('Should throw if DeleteArticleRepository throws')
+  it('Should throw if DeleteArticleRepository throws', () => {
+    const { sut, deleteArticleRepositorySpy } = makeSut()
+    jest.spyOn(deleteArticleRepositorySpy, 'delete').mockRejectedValueOnce(new Error())
+    const promise = sut.delete(Math.random())
+    expect(promise).rejects.toThrow()
+  })
 })
