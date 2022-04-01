@@ -1,7 +1,8 @@
 import {
   SaveArticlesRepository,
   CountArticlesRepository,
-  LoadArticlesRepository
+  LoadArticlesRepository,
+  LoadArticleByIdRepository
 } from '@/data/protocols'
 
 const mokcArticle = (): LoadArticlesRepository.Result => ([{
@@ -34,6 +35,14 @@ export class LoadArticlesRepositorySpy implements LoadArticlesRepository {
   resutl: LoadArticlesRepository.Result = mokcArticle()
 
   async loadAll (): Promise<LoadArticlesRepository.Result> {
+    return Promise.resolve(this.resutl)
+  }
+}
+
+export class LoadArticleByIdRepositorySpy implements LoadArticleByIdRepository {
+  resutl: LoadArticleByIdRepository.Result = mokcArticle()[0]
+
+  async loadById (id: string): Promise<LoadArticleByIdRepository.Result> {
     return Promise.resolve(this.resutl)
   }
 }
