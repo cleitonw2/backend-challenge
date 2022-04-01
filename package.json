@@ -1,0 +1,53 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules ./src/main/server.ts",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down",
+    "migration": "npx prisma migrate dev --schema ./src/infra/prisma/schema.prisma",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "test:integration": "npm run up && npm run migration && npm test -- --watch -c jest-integration-config.js",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "clear:cache": "jest --clearCache",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "Cleiton",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.21",
+    "@types/supertest": "^2.0.11",
+    "@types/validator": "^13.7.1",
+    "eslint": "^7.32.0",
+    "eslint-config-standard-with-typescript": "^21.0.1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "git-commit-msg-linter": "^4.1.1",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "lint-staged": "^12.3.5",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.2.2",
+    "ts-jest": "^27.1.3",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "module-alias": "^2.2.2",
+    "validator": "^13.7.0"
+  },
+  "_moduleAliases": {
+    "@": "dist"
+  }
+}
