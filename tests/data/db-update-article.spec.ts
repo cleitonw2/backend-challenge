@@ -24,5 +24,10 @@ describe('DbUpdateArticle UseCase', () => {
     expect(updateArticleRepositorySpy.params).toEqual(params)
   })
 
-  it.todo('Should throw if UpdateArticleRepository throws')
+  it('Should throw if UpdateArticleRepository throws', () => {
+    const { sut, updateArticleRepositorySpy } = makeSut()
+    jest.spyOn(updateArticleRepositorySpy, 'update').mockRejectedValueOnce(new Error())
+    const promise = sut.update(updateArticleRepositorySpy.params)
+    expect(promise).rejects.toThrow()
+  })
 })
