@@ -1,5 +1,9 @@
 import { Article } from '@/domain/models'
 
 export interface SaveArticles {
-  save: (articles: Article[]) => Promise<void>
+  save: (articles: SaveArticles.Params) => Promise<void>
+}
+
+export namespace SaveArticles {
+  export type Params = Article[]
 }
