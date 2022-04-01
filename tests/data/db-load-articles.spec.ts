@@ -23,7 +23,12 @@ describe('DbLoadArticles UseCase', () => {
     expect(loadSpy).toHaveBeenCalled()
   })
 
-  it.todo('Should throw if LoadArticlesRepository throws')
+  it('Should throw if LoadArticlesRepository throws', () => {
+    const { sut, loadArticlesRepositorySpy } = makeSut()
+    jest.spyOn(loadArticlesRepositorySpy, 'loadAll').mockRejectedValueOnce(new Error())
+    const promise = sut.load()
+    expect(promise).rejects.toThrow()
+  })
 
   it.todo('Should return articles if LoadArticlesRepository returns articles')
 })
