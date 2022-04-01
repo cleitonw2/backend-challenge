@@ -23,7 +23,12 @@ describe('DbCountArticles UseCase', () => {
     expect(countSpy).toHaveBeenCalled()
   })
 
-  it.todo('Should throw if CountArticlesRepository throws')
+  it('Should throw if CountArticlesRepository throws', () => {
+    const { sut, countArticlesRepositorySpy } = makeSut()
+    jest.spyOn(countArticlesRepositorySpy, 'count').mockRejectedValueOnce(new Error())
+    const promise = sut.count()
+    expect(promise).rejects.toThrow()
+  })
 
   it.todo('Should return a any number if ContArticlesRepository returns a number')
 })
