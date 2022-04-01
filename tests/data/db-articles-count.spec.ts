@@ -30,5 +30,9 @@ describe('DbCountArticles UseCase', () => {
     expect(promise).rejects.toThrow()
   })
 
-  it.todo('Should return a any number if ContArticlesRepository returns a number')
+  it('Should return a any number if ContArticlesRepository returns a number', async () => {
+    const { sut, countArticlesRepositorySpy } = makeSut()
+    const result = await sut.count()
+    expect(result).toBe(countArticlesRepositorySpy.resutl)
+  })
 })
