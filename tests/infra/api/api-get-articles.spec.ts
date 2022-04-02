@@ -19,6 +19,15 @@ describe('ArticleApi', () => {
     expect(getSpy).toHaveBeenCalledWith('any_url')
   })
 
+  it('Should throw if get() throws', () => {
+    const sut = makeSut()
+    jest.spyOn(axios, 'get').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const promise = sut.getAll('any_url')
+    expect(promise).rejects.toThrow()
+  })
+
   it('Should return any value if get() success', async () => {
     const sut = makeSut()
     const result = await sut.getAll('any_url')
