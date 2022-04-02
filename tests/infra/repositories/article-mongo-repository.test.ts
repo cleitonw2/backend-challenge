@@ -43,4 +43,18 @@ describe('ArticleMongoRepository', () => {
       expect(result.id).toBe(article.id)
     })
   })
+
+  describe('loadAll()', () => {
+    it('Should load all articles', async () => {
+      const sut = makeSut()
+      const article1 = mokcArticle()
+      const article2 = mokcArticle()
+      await articleCollection.insertMany([article1, article2])
+      const articles = await sut.loadAll({
+        limit: 0,
+        offset: 0
+      })
+      expect(articles).toHaveLength(2)
+    })
+  })
 })
