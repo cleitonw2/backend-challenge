@@ -1,13 +1,17 @@
 import { SaveArticles } from '@/domain/contracts'
-import { CountArticlesRepository, GetAllArticlesApi, SaveArticlesRepository } from '@/data/protocols'
-import { LoadDateOfLastArticleRepositorySpy } from '../mock-article'
+import {
+  CountArticlesRepository,
+  GetAllArticlesApi,
+  SaveArticlesRepository,
+  LoadDateOfLastArticleRepository
+} from '@/data/protocols'
 
 export class DbSaveArticles implements SaveArticles {
   constructor (
     private readonly countRepository: CountArticlesRepository,
     private readonly getAllArticlesApi: GetAllArticlesApi,
     private readonly saveArticlesRepository: SaveArticlesRepository,
-    private readonly loadDateOfLastArticleRepository: LoadDateOfLastArticleRepositorySpy
+    private readonly loadDateOfLastArticleRepository: LoadDateOfLastArticleRepository
   ) {}
 
   async save (defaultUrl: string, url: string): Promise<void> {
