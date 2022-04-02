@@ -1,8 +1,8 @@
-import { SaveArticlesJob } from '@/domain/contracts'
+import { SaveArticles } from '@/domain/contracts'
 import { CountArticlesRepository, GetAllArticlesApi, SaveArticlesRepository } from '@/data/protocols'
 import { LoadDateOfLastArticleRepositorySpy } from '../mock-article'
 
-export class DbSaveArticles implements SaveArticlesJob {
+export class DbSaveArticles implements SaveArticles {
   constructor (
     private readonly countRepository: CountArticlesRepository,
     private readonly getAllArticlesApi: GetAllArticlesApi,
