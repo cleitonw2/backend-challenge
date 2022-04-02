@@ -5,7 +5,8 @@ import {
   LoadArticleByIdRepository,
   DeleteArticleRepository,
   UpdateArticleRepository,
-  GetAllArticlesApi
+  GetAllArticlesApi,
+  LoadDateOfLastArticleRepository
 } from '@/data/protocols'
 
 const mokcArticle = (): LoadArticlesRepository.Result => ([{
@@ -80,6 +81,14 @@ export class GetAllArticlesApiSpy implements GetAllArticlesApi {
 
   async getAll (url: string): Promise<any> {
     this.url = url
+    return Promise.resolve(this.result)
+  }
+}
+
+export class LoadDateOfLastArticleRepositorySpy implements LoadDateOfLastArticleRepository {
+  result = 'any_date'
+
+  async loadDate (): Promise<string> {
     return Promise.resolve(this.result)
   }
 }
