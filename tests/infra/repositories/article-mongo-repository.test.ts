@@ -111,4 +111,15 @@ describe('ArticleMongoRepository', () => {
       expect(result.launches[0].provider).toBe(provider)
     })
   })
+
+  describe('delete()', () => {
+    it('Should delete article', async () => {
+      const sut = makeSut()
+      const article2 = mokcArticle()
+      await articleCollection.insertMany([mokcArticle(), article2])
+      await sut.delete(article2.id)
+      const result = await articleCollection.findOne({ id: article2.id })
+      expect(result).toBeNull()
+    })
+  })
 })
