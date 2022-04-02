@@ -4,7 +4,7 @@ import { ArticleApi } from '@/infra/api'
 jest.mock('axios', () => ({
   async get (): Promise<any> {
     return new Promise(resolve => resolve({
-      value: 'any_value'
+      data: { value: 'any_value' }
     }))
   }
 }))
@@ -17,5 +17,11 @@ describe('ArticleApi', () => {
     const getSpy = jest.spyOn(axios, 'get')
     await sut.getAll('any_url')
     expect(getSpy).toHaveBeenCalledWith('any_url')
+  })
+
+  it('Should return any value if get() success', async () => {
+    const sut = makeSut()
+    const result = await sut.getAll('any_url')
+    expect(result).toEqual({ value: 'any_value' })
   })
 })
