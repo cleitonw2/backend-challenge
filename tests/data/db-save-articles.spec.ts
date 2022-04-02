@@ -1,20 +1,23 @@
 import { DbSaveArticles } from '@/data/usecases'
-import { CountArticlesRepositorySpy, GetAllArticlesApiSpy } from './mock-article'
+import { CountArticlesRepositorySpy, GetAllArticlesApiSpy, SaveArticlesRepositorySpy } from './mock-article'
 
 type SutTypes = {
   sut: DbSaveArticles
   countRepository: CountArticlesRepositorySpy
   getAllArticlesApiSpy: GetAllArticlesApiSpy
+  saveArticlesRepositorySpy: SaveArticlesRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const countRepository = new CountArticlesRepositorySpy()
   const getAllArticlesApiSpy = new GetAllArticlesApiSpy()
-  const sut = new DbSaveArticles(countRepository, getAllArticlesApiSpy)
+  const saveArticlesRepositorySpy = new SaveArticlesRepositorySpy()
+  const sut = new DbSaveArticles(countRepository, getAllArticlesApiSpy, saveArticlesRepositorySpy)
   return {
     sut,
     countRepository,
-    getAllArticlesApiSpy
+    getAllArticlesApiSpy,
+    saveArticlesRepositorySpy
   }
 }
 
@@ -26,7 +29,7 @@ describe('DbSaveArticles UseCase', () => {
     expect(countSpy).toHaveBeenCalled()
   })
 
-  it('Should call GetAllArticlesApiSpy whit correct param', async () => {
+  it('Should call GetAllArticlesApi whit correct param', async () => {
     const { sut, countRepository, getAllArticlesApiSpy } = makeSut()
     countRepository.resutl = 0
     await sut.save('any_default_url', 'any_url')
@@ -34,5 +37,15 @@ describe('DbSaveArticles UseCase', () => {
     countRepository.resutl = 1
     await sut.save('any_default_url', 'any_url')
     expect(getAllArticlesApiSpy.url).toBe('any_default_url')
+  })
+
+  it('Should call SaveArticlesRepository whit correct params', async () => {
+    const { sut, countRepository, saveArticlesRepositorySpy, getAllArticlesApiSpy } = makeSut()
+    countRepository.resutl = 0
+    await sut.save('any_default_url', 'any_url')
+    expect(saveArticlesRepositorySpy.params).toEqual(getAllArticlesApiSpy.result)
+    countRepository.resutl = 1
+    await sut.save('any_default_url', 'any_url')
+    expect(saveArticlesRepositorySpy.params).toEqual(getAllArticlesApiSpy.result)
   })
 })
