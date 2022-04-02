@@ -1,18 +1,21 @@
 import { SaveArticlesJob } from '@/domain/contracts'
-import { CountArticlesRepository, GetAllArticlesApi } from '@/data/protocols'
+import { CountArticlesRepository, GetAllArticlesApi, SaveArticlesRepository } from '@/data/protocols'
 
 export class DbSaveArticles implements SaveArticlesJob {
   constructor (
     private readonly countRepository: CountArticlesRepository,
-    private readonly getAllArticlesApi: GetAllArticlesApi
+    private readonly getAllArticlesApi: GetAllArticlesApi,
+    private readonly saveArticlesRepository: SaveArticlesRepository
   ) {}
 
   async save (defaultUrl: string, url: string): Promise<void> {
     const count = await this.countRepository.count()
+    let articles: any
     if (count === 0) {
-      await this.getAllArticlesApi.getAll(url)
+      articles = await this.getAllArticlesApi.getAll(url)
     } else {
-      await this.getAllArticlesApi.getAll(defaultUrl)
+      articles = await this.getAllArticlesApi.getAll(defaultUrl)
     }
+    await this.saveArticlesRepository.save(articles)
   }
 }
