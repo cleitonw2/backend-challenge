@@ -4,13 +4,15 @@ import {
   LoadArticleByIdRepository,
   CountArticlesRepository,
   UpdateArticleRepository,
-  DeleteArticleRepository
+  DeleteArticleRepository,
+  LoadDateOfLastArticleRepository
 } from '@/data/protocols'
 import { Article } from '@/domain/models'
 import { MongoHelper } from './mongo-helper'
 
 export class ArticleMongoRepository implements SaveArticlesRepository, LoadArticlesRepository,
-CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository, DeleteArticleRepository {
+CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository, DeleteArticleRepository,
+LoadDateOfLastArticleRepository {
   async save (articles: SaveArticlesRepository.Params): Promise<void> {
     const articleCollection = await MongoHelper.getCollection('articles')
     await articleCollection.insertMany(articles)
@@ -31,6 +33,12 @@ CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository, Del
     const articleCollection = await MongoHelper.getCollection('articles')
     const article = await articleCollection.findOne({ id })
     return MongoHelper.map(article)
+  }
+
+  async loadDate (): Promise<string> {
+    const articleCollection = await MongoHelper.getCollection('articles')
+    const articles = await articleCollection.find().sort({ publishedAt: -1 }).limit(1).toArray()
+    return articles[0].publishedAt
   }
 
   async count (): Promise<number> {
