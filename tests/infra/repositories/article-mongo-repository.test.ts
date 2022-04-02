@@ -57,4 +57,15 @@ describe('ArticleMongoRepository', () => {
       expect(articles).toHaveLength(2)
     })
   })
+
+  describe('count()', () => {
+    it('Should count articles', async () => {
+      const sut = makeSut()
+      const article1 = mokcArticle()
+      const article2 = mokcArticle()
+      await articleCollection.insertMany([article1, article2])
+      const articles = await sut.count()
+      expect(articles).toBe(2)
+    })
+  })
 })
