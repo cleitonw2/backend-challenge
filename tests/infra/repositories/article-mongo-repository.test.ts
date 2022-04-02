@@ -122,4 +122,17 @@ describe('ArticleMongoRepository', () => {
       expect(result).toBeNull()
     })
   })
+
+  describe('loadDate()', () => {
+    it('Should load date of last article', async () => {
+      const sut = makeSut()
+      const article1 = mokcArticle()
+      article1.publishedAt = '2022-04-01T18:25:57.000Z'
+      const article2 = mokcArticle()
+      article2.publishedAt = '2022-04-02T18:25:57.000Z'
+      await articleCollection.insertMany([article1, article2])
+      const date = await sut.loadDate()
+      expect(date).toBe(article2.publishedAt)
+    })
+  })
 })
