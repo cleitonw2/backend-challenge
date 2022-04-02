@@ -1,4 +1,5 @@
 export * from './save-article'
+export * from './save-articles-job'
 export * from './count-articles'
 export * from './load-articles'
 export * from './load-article-by-id'
