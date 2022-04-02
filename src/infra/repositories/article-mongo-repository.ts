@@ -2,13 +2,14 @@ import {
   SaveArticlesRepository,
   LoadArticlesRepository,
   LoadArticleByIdRepository,
-  CountArticlesRepository
+  CountArticlesRepository,
+  UpdateArticleRepository
 } from '@/data/protocols'
 import { Article } from '@/domain/models'
 import { MongoHelper } from './mongo-helper'
 
 export class ArticleMongoRepository implements SaveArticlesRepository, LoadArticlesRepository,
-CountArticlesRepository, LoadArticleByIdRepository {
+CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository {
   async save (articles: SaveArticlesRepository.Params): Promise<void> {
     const articleCollection = await MongoHelper.getCollection('articles')
     await articleCollection.insertMany(articles)
@@ -34,5 +35,15 @@ CountArticlesRepository, LoadArticleByIdRepository {
   async count (): Promise<number> {
     const articleCollection = await MongoHelper.getCollection('articles')
     return articleCollection.countDocuments()
+  }
+
+  async update (data: UpdateArticleRepository.Params): Promise<void> {
+    const { id, article } = data
+    const articleCollection = await MongoHelper.getCollection('articles')
+    await articleCollection.updateOne({
+      id
+    }, {
+      $set: { ...article }
+    })
   }
 }
