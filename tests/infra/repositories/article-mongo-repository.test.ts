@@ -80,4 +80,35 @@ describe('ArticleMongoRepository', () => {
       expect(result.title).toBe(article1.title)
     })
   })
+
+  describe('update()', () => {
+    it('Should update article', async () => {
+      const sut = makeSut()
+      const article2 = mokcArticle()
+      await articleCollection.insertMany([mokcArticle(), article2])
+      const title = Math.random().toString()
+      const url = Math.random().toString()
+      const provider = Math.random().toString()
+      await sut.update({
+        id: article2.id,
+        article: {
+          id: article2.id,
+          title,
+          url,
+          imageUrl: 'any_img_url',
+          newsSite: 'any',
+          publishedAt: 'any',
+          launches: [{
+            id: 'any_id',
+            provider
+          }],
+          events: [{ id: 122 }]
+        }
+      })
+      const result = await articleCollection.findOne({ id: article2.id })
+      expect(result.title).toBe(title)
+      expect(result.url).toBe(url)
+      expect(result.launches[0].provider).toBe(provider)
+    })
+  })
 })
