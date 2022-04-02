@@ -36,8 +36,10 @@ export class CountArticlesRepositorySpy implements CountArticlesRepository {
 
 export class LoadArticlesRepositorySpy implements LoadArticlesRepository {
   resutl: LoadArticlesRepository.Result = mokcArticle()
+  params: LoadArticlesRepository.Params
 
-  async loadAll (): Promise<LoadArticlesRepository.Result> {
+  async loadAll (data: LoadArticlesRepository.Params): Promise<LoadArticlesRepository.Result> {
+    this.params = data
     return Promise.resolve(this.resutl)
   }
 }

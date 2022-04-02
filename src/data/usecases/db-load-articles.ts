@@ -4,7 +4,7 @@ import { LoadArticlesRepository } from '@/data/protocols'
 export class DbLoadArticles implements LoadArticles {
   constructor (private readonly loadArticlesRepository: LoadArticlesRepository) {}
 
-  async load (): Promise<LoadArticles.Result> {
-    return this.loadArticlesRepository.loadAll()
+  async load (data: LoadArticles.Params): Promise<LoadArticles.Result> {
+    return this.loadArticlesRepository.loadAll(data)
   }
 }
