@@ -23,7 +23,7 @@ export const MongoHelper = {
 
   map: (data: any): any => {
     const { _id, ...rest } = data
-    return { ...rest }
+    return rest
   },
 
   mapCollection: (collection: any): any => {
