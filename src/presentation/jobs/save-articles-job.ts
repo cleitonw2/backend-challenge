@@ -5,6 +5,10 @@ export class SaveArticlesJob implements Job {
   constructor (private readonly saveArticles: SaveArticles) {}
 
   async execute (defaultUrl: string, url: string): Promise<void> {
-    await this.saveArticles.save(defaultUrl, url)
+    try {
+      await this.saveArticles.save(defaultUrl, url)
+    } catch (error) {
+      return null
+    }
   }
 }
