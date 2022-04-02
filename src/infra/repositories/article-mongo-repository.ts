@@ -3,13 +3,14 @@ import {
   LoadArticlesRepository,
   LoadArticleByIdRepository,
   CountArticlesRepository,
-  UpdateArticleRepository
+  UpdateArticleRepository,
+  DeleteArticleRepository
 } from '@/data/protocols'
 import { Article } from '@/domain/models'
 import { MongoHelper } from './mongo-helper'
 
 export class ArticleMongoRepository implements SaveArticlesRepository, LoadArticlesRepository,
-CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository {
+CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository, DeleteArticleRepository {
   async save (articles: SaveArticlesRepository.Params): Promise<void> {
     const articleCollection = await MongoHelper.getCollection('articles')
     await articleCollection.insertMany(articles)
@@ -45,5 +46,10 @@ CountArticlesRepository, LoadArticleByIdRepository, UpdateArticleRepository {
     }, {
       $set: { ...article }
     })
+  }
+
+  async delete (id: number): Promise<void> {
+    const articleCollection = await MongoHelper.getCollection('articles')
+    await articleCollection.deleteOne({ id })
   }
 }
