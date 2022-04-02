@@ -1,7 +1,8 @@
-import { SaveArticlesRepository, LoadArticlesRepository } from '@/data/protocols'
+import { SaveArticlesRepository, LoadArticlesRepository, CountArticlesRepository } from '@/data/protocols'
 import { MongoHelper } from './mongo-helper'
 
-export class ArticleMongoRepository implements SaveArticlesRepository, LoadArticlesRepository {
+export class ArticleMongoRepository implements SaveArticlesRepository, LoadArticlesRepository,
+CountArticlesRepository {
   async save (articles: SaveArticlesRepository.Params): Promise<void> {
     const articleCollection = await MongoHelper.getCollection('articles')
     await articleCollection.insertMany(articles)
@@ -16,5 +17,10 @@ export class ArticleMongoRepository implements SaveArticlesRepository, LoadArtic
       .limit(limit)
       .toArray()
     return MongoHelper.mapCollection(articles)
+  }
+
+  async count (): Promise<number> {
+    const articleCollection = await MongoHelper.getCollection('articles')
+    return articleCollection.countDocuments()
   }
 }
