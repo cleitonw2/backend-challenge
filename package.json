@@ -6,14 +6,11 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules ./src/main/server.ts",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
-    "up": "docker-compose up -d",
-    "down": "docker-compose down",
-    "migration": "npx prisma migrate dev --schema ./src/infra/prisma/schema.prisma",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
-    "test:integration": "npm run up && npm run migration && npm test -- --watch -c jest-integration-config.js",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "clear:cache": "jest --clearCache",
     "prepare": "husky install"
@@ -22,6 +19,7 @@
   "author": "Cleiton",
   "license": "MIT",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^2.2.1",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
@@ -45,6 +43,7 @@
   "dependencies": {
     "express": "^4.17.3",
     "module-alias": "^2.2.2",
+    "mongodb": "^4.4.1",
     "validator": "^13.7.0"
   },
   "_moduleAliases": {
