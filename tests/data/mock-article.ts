@@ -4,7 +4,8 @@ import {
   LoadArticlesRepository,
   LoadArticleByIdRepository,
   DeleteArticleRepository,
-  UpdateArticleRepository
+  UpdateArticleRepository,
+  GetAllArticlesApi
 } from '@/data/protocols'
 
 const mokcArticle = (): LoadArticlesRepository.Result => ([{
@@ -70,5 +71,15 @@ export class UpdateArticleRepositorySpy implements UpdateArticleRepository {
   async update (data: UpdateArticleRepository.Params): Promise<void> {
     this.params = data
     Promise.resolve()
+  }
+}
+
+export class GetAllArticlesApiSpy implements GetAllArticlesApi {
+  url: string
+  result = mokcArticle()
+
+  async getAll (url: string): Promise<any> {
+    this.url = url
+    return Promise.resolve(this.result)
   }
 }
