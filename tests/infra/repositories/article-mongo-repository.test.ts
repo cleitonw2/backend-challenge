@@ -68,4 +68,16 @@ describe('ArticleMongoRepository', () => {
       expect(articles).toBe(2)
     })
   })
+
+  describe('loadById()', () => {
+    it('Should load article by id', async () => {
+      const sut = makeSut()
+      const article1 = mokcArticle()
+      const article2 = mokcArticle()
+      await articleCollection.insertMany([article1, article2])
+      const result = await sut.loadById(article1.id)
+      expect(result.id).toBe(article1.id)
+      expect(result.title).toBe(article1.title)
+    })
+  })
 })
