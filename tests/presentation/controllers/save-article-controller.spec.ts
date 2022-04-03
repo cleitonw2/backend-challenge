@@ -52,4 +52,11 @@ describe('SaveArticle Controller', () => {
     await sut.handle(article)
     expect(saveArticleSpy.article).toEqual(article)
   })
+
+  it('Should return 500 if SaveArticle throws', async () => {
+    const { sut, saveArticleSpy } = makeSut()
+    jest.spyOn(saveArticleSpy, 'save').mockRejectedValueOnce(new Error())
+    const httpResponse = await sut.handle(mokcArticle())
+    expect(httpResponse.statusCode).toBe(500)
+  })
 })
