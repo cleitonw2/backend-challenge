@@ -1,6 +1,6 @@
 import { Article } from '@/domain/models'
 import { SaveArticleController } from '@/presentation/controllers'
-import { ValidationSpy } from '../mocks'
+import { SaveArticleSpy, ValidationSpy } from '../mocks'
 
 const mokcArticle = (): Article => ({
   id: Math.random(),
@@ -16,14 +16,17 @@ const mokcArticle = (): Article => ({
 type SutTypes = {
   sut: SaveArticleController
   validationSpy: ValidationSpy
+  saveArticleSpy: SaveArticleSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new SaveArticleController(validationSpy)
+  const saveArticleSpy = new SaveArticleSpy()
+  const sut = new SaveArticleController(validationSpy, saveArticleSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    saveArticleSpy
   }
 }
 
@@ -41,5 +44,12 @@ describe('SaveArticle Controller', () => {
     const httpResponse = await sut.handle(mokcArticle())
     expect(httpResponse.body.error).toBe('Invalid Params')
     expect(httpResponse.statusCode).toBe(400)
+  })
+
+  it('Should call SaveArticle with correct params', async () => {
+    const { sut, saveArticleSpy } = makeSut()
+    const article = mokcArticle()
+    await sut.handle(article)
+    expect(saveArticleSpy.article).toEqual(article)
   })
 })
