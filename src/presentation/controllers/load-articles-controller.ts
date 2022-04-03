@@ -3,12 +3,11 @@ import { ok, serverError } from '../helpers'
 import { Controller, HttpResponse } from '../protocols'
 
 export class LoadArticlesController implements Controller {
-  constructor (private readonly loadArticles: LoadArticles) { }
+  constructor (private readonly loadArticles: LoadArticles) {}
 
   async handle (request?: LoadArticlesController.Params): Promise<HttpResponse> {
     try {
-      const { offset = 0, limit = 10 } = request
-      const articles = await this.loadArticles.load({ offset, limit })
+      const articles = await this.loadArticles.load(request || { offset: 0, limit: 10 })
       return ok(articles)
     } catch (error) {
       return serverError(error)
