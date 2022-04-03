@@ -34,4 +34,12 @@ describe('SaveArticle Controller', () => {
     await sut.handle(article)
     expect(validationSpy.input).toEqual(article)
   })
+
+  it('Should return 400 if Validation return an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.result = new Error('Invalid Params')
+    const httpResponse = await sut.handle(mokcArticle())
+    expect(httpResponse.body.error).toBe('Invalid Params')
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
