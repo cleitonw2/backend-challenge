@@ -1,16 +1,19 @@
+import { SaveArticle } from '@/domain/contracts'
 import { Article } from '@/domain/models'
-import { badRequest } from '../helpers'
+import { badRequest, ok } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
 export class SaveArticleController implements Controller {
   constructor (
-    private readonly validation: Validation
+    private readonly validation: Validation,
+    private readonly saveArticle: SaveArticle
   ) {}
 
   async handle (request: SaveArticleController.Request): Promise<HttpResponse> {
     const error = this.validation.validate(request)
     if (error) return badRequest(error)
-    return null as any
+    await this.saveArticle.save(request)
+    return ok('')
   }
 }
 
