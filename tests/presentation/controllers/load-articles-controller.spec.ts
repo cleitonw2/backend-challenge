@@ -1,4 +1,5 @@
 import { LoadArticlesController } from '@/presentation/controllers'
+import { serverError } from '@/presentation/helpers'
 import { LoadArticlesSpy } from '../mocks'
 
 const mockRequest = (): LoadArticlesController.Params => ({
@@ -27,7 +28,12 @@ describe('SaveArticle Controller', () => {
     expect(loadArticlesSpy.params).toEqual(mockRequest())
   })
 
-  it.todo('Should return 500 if LoadArticles throws')
+  it('Should return 500 if LoadArticles throws', async () => {
+    const { sut, loadArticlesSpy } = makeSut()
+    jest.spyOn(loadArticlesSpy, 'load').mockRejectedValueOnce(new Error())
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 
   it.todo('Should return 200 on success')
 })
