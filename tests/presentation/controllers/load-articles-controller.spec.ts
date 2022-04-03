@@ -1,5 +1,5 @@
 import { LoadArticlesController } from '@/presentation/controllers'
-import { serverError } from '@/presentation/helpers'
+import { serverError, ok } from '@/presentation/helpers'
 import { LoadArticlesSpy } from '../mocks'
 
 const mockRequest = (): LoadArticlesController.Params => ({
@@ -35,5 +35,9 @@ describe('SaveArticle Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  it.todo('Should return 200 on success')
+  it('Should return 200 on success', async () => {
+    const { sut, loadArticlesSpy } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok(loadArticlesSpy.result))
+  })
 })
