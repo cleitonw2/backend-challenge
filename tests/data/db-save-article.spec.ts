@@ -1,17 +1,6 @@
 import { DbSaveArticle } from '@/data/usecases'
-import { Article } from '@/domain/models'
 import { SaveArticlesRepositorySpy } from './mock-article'
-
-const mokcArticle = (): Article => ({
-  id: Math.random(),
-  title: 'any_title',
-  url: 'any_url',
-  imageUrl: 'any_img_url',
-  newsSite: 'any',
-  publishedAt: 'any',
-  launches: [{ id: 'any_id' }],
-  events: [{ id: 122 }]
-})
+import { mockArticle } from '@/tests/domain/mocks'
 
 type Sut = {
   saveArticlesRepositorySpy: SaveArticlesRepositorySpy
@@ -30,7 +19,7 @@ const makeSut = (): Sut => {
 describe('DbSaveArticles UseCase', () => {
   it('Should call SaveArticlesRepository whit correct params', async () => {
     const { sut, saveArticlesRepositorySpy } = makeSut()
-    const article = mokcArticle()
+    const article = mockArticle()
     await sut.save(article)
     expect(saveArticlesRepositorySpy.params[0]).toEqual(article)
   })
@@ -38,7 +27,7 @@ describe('DbSaveArticles UseCase', () => {
   it('Should throw if SaveArticlesRepository throws', () => {
     const { sut, saveArticlesRepositorySpy } = makeSut()
     jest.spyOn(saveArticlesRepositorySpy, 'save').mockRejectedValueOnce(new Error())
-    const promise = sut.save(mokcArticle())
+    const promise = sut.save(mockArticle())
     expect(promise).rejects.toThrow()
   })
 })

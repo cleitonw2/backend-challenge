@@ -8,17 +8,7 @@ import {
   GetAllArticlesApi,
   LoadDateOfLastArticleRepository
 } from '@/data/protocols'
-
-const mokcArticle = (): LoadArticlesRepository.Result => ([{
-  id: Math.random(),
-  title: 'any_title',
-  url: 'any_url',
-  imageUrl: 'any_img_url',
-  newsSite: 'any',
-  publishedAt: 'any',
-  launches: [{ id: 'any_id' }],
-  events: [{ id: 122 }]
-}])
+import { mockArticle } from '@/tests/domain/mocks'
 
 export class SaveArticlesRepositorySpy implements SaveArticlesRepository {
   params: SaveArticlesRepository.Params
@@ -37,7 +27,7 @@ export class CountArticlesRepositorySpy implements CountArticlesRepository {
 }
 
 export class LoadArticlesRepositorySpy implements LoadArticlesRepository {
-  resutl: LoadArticlesRepository.Result = mokcArticle()
+  resutl: LoadArticlesRepository.Result = [mockArticle()]
   params: LoadArticlesRepository.Params
 
   async loadAll (data: LoadArticlesRepository.Params): Promise<LoadArticlesRepository.Result> {
@@ -47,7 +37,7 @@ export class LoadArticlesRepositorySpy implements LoadArticlesRepository {
 }
 
 export class LoadArticleByIdRepositorySpy implements LoadArticleByIdRepository {
-  resutl: LoadArticleByIdRepository.Result = mokcArticle()[0]
+  resutl: LoadArticleByIdRepository.Result = mockArticle()
 
   async loadById (id: number): Promise<LoadArticleByIdRepository.Result> {
     return Promise.resolve(this.resutl)
@@ -66,7 +56,7 @@ export class DeleteArticleRepositorySpy implements DeleteArticleRepository {
 export class UpdateArticleRepositorySpy implements UpdateArticleRepository {
   params: UpdateArticleRepository.Params = {
     id: 1,
-    article: mokcArticle()[0]
+    article: mockArticle()
   }
 
   async update (data: UpdateArticleRepository.Params): Promise<void> {
@@ -77,7 +67,7 @@ export class UpdateArticleRepositorySpy implements UpdateArticleRepository {
 
 export class GetAllArticlesApiSpy implements GetAllArticlesApi {
   url: string
-  result = mokcArticle()
+  result = mockArticle()
 
   async getAll (url: string): Promise<any> {
     this.url = url

@@ -1,19 +1,8 @@
 import { Collection } from 'mongodb'
 import { MongoHelper, ArticleMongoRepository } from '@/infra/repositories'
-import { Article } from '@/domain/models'
+import { mockArticle } from '@/tests/domain/mocks'
 
 let articleCollection: Collection
-
-const mokcArticle = (): Article => ({
-  id: Math.random(),
-  title: 'any_title',
-  url: 'any_url',
-  imageUrl: 'any_img_url',
-  newsSite: 'any',
-  publishedAt: 'any',
-  launches: [{ id: 'any_id' }],
-  events: [{ id: 122 }]
-})
 
 const makeSut = (): ArticleMongoRepository => new ArticleMongoRepository()
 
@@ -34,7 +23,7 @@ describe('ArticleMongoRepository', () => {
   describe('save()', () => {
     it('Should create articles', async () => {
       const sut = makeSut()
-      const article = mokcArticle()
+      const article = mockArticle()
       await sut.save([article])
       const result = await articleCollection.findOne({
         id: article.id
@@ -47,8 +36,8 @@ describe('ArticleMongoRepository', () => {
   describe('loadAll()', () => {
     it('Should load all articles', async () => {
       const sut = makeSut()
-      const article1 = mokcArticle()
-      const article2 = mokcArticle()
+      const article1 = mockArticle()
+      const article2 = mockArticle()
       await articleCollection.insertMany([article1, article2])
       const articles = await sut.loadAll({
         limit: 0,
@@ -61,8 +50,8 @@ describe('ArticleMongoRepository', () => {
   describe('count()', () => {
     it('Should count articles', async () => {
       const sut = makeSut()
-      const article1 = mokcArticle()
-      const article2 = mokcArticle()
+      const article1 = mockArticle()
+      const article2 = mockArticle()
       await articleCollection.insertMany([article1, article2])
       const articles = await sut.count()
       expect(articles).toBe(2)
@@ -72,8 +61,8 @@ describe('ArticleMongoRepository', () => {
   describe('loadById()', () => {
     it('Should load article by id', async () => {
       const sut = makeSut()
-      const article1 = mokcArticle()
-      const article2 = mokcArticle()
+      const article1 = mockArticle()
+      const article2 = mockArticle()
       await articleCollection.insertMany([article1, article2])
       const result = await sut.loadById(article1.id)
       expect(result.id).toBe(article1.id)
@@ -84,8 +73,8 @@ describe('ArticleMongoRepository', () => {
   describe('update()', () => {
     it('Should update article', async () => {
       const sut = makeSut()
-      const article2 = mokcArticle()
-      await articleCollection.insertMany([mokcArticle(), article2])
+      const article2 = mockArticle()
+      await articleCollection.insertMany([mockArticle(), article2])
       const title = Math.random().toString()
       const url = Math.random().toString()
       const provider = Math.random().toString()
@@ -115,8 +104,8 @@ describe('ArticleMongoRepository', () => {
   describe('delete()', () => {
     it('Should delete article', async () => {
       const sut = makeSut()
-      const article2 = mokcArticle()
-      await articleCollection.insertMany([mokcArticle(), article2])
+      const article2 = mockArticle()
+      await articleCollection.insertMany([mockArticle(), article2])
       await sut.delete(article2.id)
       const result = await articleCollection.findOne({ id: article2.id })
       expect(result).toBeNull()
@@ -126,9 +115,9 @@ describe('ArticleMongoRepository', () => {
   describe('loadDate()', () => {
     it('Should load date of last article', async () => {
       const sut = makeSut()
-      const article1 = mokcArticle()
+      const article1 = mockArticle()
       article1.publishedAt = '2022-04-01T18:25:57.000Z'
-      const article2 = mokcArticle()
+      const article2 = mockArticle()
       article2.publishedAt = '2022-04-02T18:25:57.000Z'
       await articleCollection.insertMany([article1, article2])
       const date = await sut.loadDate()
