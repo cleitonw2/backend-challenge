@@ -22,4 +22,10 @@ describe('ValidateFieldType', () => {
     expect(error2).toEqual(new InvalidParamError('title'))
     expect(error3).toEqual(new InvalidParamError('url'))
   })
+
+  it('Should return null if validation success', () => {
+    const article = mockObject()
+    const error = makeSut(['title', 'url'], '').validate(article)
+    expect(error).toBe(null)
+  })
 })
