@@ -1,5 +1,12 @@
 import { HttpResponse } from '@/presentation/protocols'
 
+export const serverError = (serverError: Error): HttpResponse => ({
+  statusCode: 500,
+  body: {
+    error: 'Internal server error: ' + serverError.message
+  }
+})
+
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
   body: {
