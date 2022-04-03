@@ -1,13 +1,18 @@
 import { LoadArticles } from '@/domain/contracts'
+import { ok, serverError } from '../helpers'
 import { Controller, HttpResponse } from '../protocols'
 
 export class LoadArticlesController implements Controller {
-  constructor (private readonly loadArticles: LoadArticles) {}
+  constructor (private readonly loadArticles: LoadArticles) { }
 
   async handle (request?: LoadArticlesController.Params): Promise<HttpResponse> {
-    const { offset = 0, limit = 10 } = request
-    await this.loadArticles.load({ offset, limit })
-    return null as any
+    try {
+      const { offset = 0, limit = 10 } = request
+      const articles = await this.loadArticles.load({ offset, limit })
+      return ok(articles)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 
