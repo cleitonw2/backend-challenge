@@ -1,7 +1,7 @@
 import { UpdateArticleController } from '@/presentation/controllers'
 import { mockUpdateArticle } from '@/tests/domain/mocks'
 import { badRequest } from '@/presentation/helpers'
-import { ValidationSpy } from '../mocks'
+import { ValidationSpy, UpdateArticleSpy } from '../mocks'
 
 const mockRequest = (): UpdateArticleController.Params => ({
   id: Math.random().toString(),
@@ -11,14 +11,17 @@ const mockRequest = (): UpdateArticleController.Params => ({
 type SutTypes = {
   sut: UpdateArticleController
   validationSpy: ValidationSpy
+  updateArticleSpy: UpdateArticleSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new UpdateArticleController(validationSpy)
+  const updateArticleSpy = new UpdateArticleSpy()
+  const sut = new UpdateArticleController(validationSpy, updateArticleSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    updateArticleSpy
   }
 }
 
@@ -37,7 +40,13 @@ describe('UpdateArticle Controller', () => {
     expect(httpResponse).toEqual(badRequest(new Error()))
   })
 
-  it.todo('Should call UpdateArticle with correct param')
+  it('Should call UpdateArticle with correct params', async () => {
+    const { sut, updateArticleSpy } = makeSut()
+    const request = mockRequest()
+    await sut.handle(request)
+    const { id, ...rest } = request
+    expect(updateArticleSpy.params).toEqual({ id: +id, ...rest })
+  })
 
   it.todo('Should return 500 if UpdateArticle throws')
 
