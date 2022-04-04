@@ -1,6 +1,6 @@
 import { UpdateArticle } from '@/domain/contracts'
 import { Article } from '@/domain/models'
-import { badRequest } from '../helpers'
+import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
 export class UpdateArticleController implements Controller {
@@ -10,11 +10,15 @@ export class UpdateArticleController implements Controller {
   ) {}
 
   async handle (request: UpdateArticleController.Params): Promise<HttpResponse> {
-    const error = this.validation.validate(request)
-    if (error) return badRequest(error)
-    const { id, ...rest } = request
-    await this.updateArticle.update({ id: +id, ...rest })
-    return null as any
+    try {
+      const error = this.validation.validate(request)
+      if (error) return badRequest(error)
+      const { id, ...rest } = request
+      await this.updateArticle.update({ id: +id, ...rest })
+      return ok('')
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 
