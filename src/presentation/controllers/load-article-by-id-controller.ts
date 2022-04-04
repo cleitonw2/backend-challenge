@@ -1,5 +1,5 @@
 import { LoadArticleById } from '@/domain/contracts'
-import { badRequest } from '../helpers'
+import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
 export class LoadArticleByIdController implements Controller {
@@ -9,10 +9,14 @@ export class LoadArticleByIdController implements Controller {
   ) {}
 
   async handle (request: LoadArticleByIdController.Params): Promise<HttpResponse> {
-    const error = this.validation.validate(request)
-    if (error) return badRequest(error)
-    await this.loadArticleById.load(+request.id)
-    return null as any
+    try {
+      const error = this.validation.validate(request)
+      if (error) return badRequest(error)
+      const article = await this.loadArticleById.load(+request.id)
+      return ok(article)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 
