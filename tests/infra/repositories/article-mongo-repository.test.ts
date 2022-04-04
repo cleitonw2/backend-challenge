@@ -81,7 +81,6 @@ describe('ArticleMongoRepository', () => {
       await sut.update({
         id: article2.id,
         article: {
-          id: article2.id,
           title,
           url,
           imageUrl: 'any_img_url',
