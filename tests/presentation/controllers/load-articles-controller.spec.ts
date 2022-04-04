@@ -21,7 +21,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('SaveArticle Controller', () => {
+describe('LoadArticles Controller', () => {
   it('Should call LoadArticles with correct params', async () => {
     const { sut, loadArticlesSpy } = makeSut()
     await sut.handle(mockRequest())

@@ -1,4 +1,4 @@
-import { LoadArticles, SaveArticle, SaveArticles } from '@/domain/contracts'
+import { LoadArticles, SaveArticle, SaveArticles, LoadArticleById } from '@/domain/contracts'
 import { Article } from '@/domain/models'
 import { mockArticle } from '@/tests/domain/mocks'
 
@@ -29,5 +29,15 @@ export class LoadArticlesSpy implements LoadArticles {
   async load (data: LoadArticles.Params): Promise<LoadArticles.Result> {
     this.params = data
     return Promise.resolve(this.result)
+  }
+}
+
+export class LoadArticleByIdSpy implements LoadArticleById {
+  id: number
+  resutl: LoadArticleById.Result = mockArticle()
+
+  async load (id: number): Promise<LoadArticleById.Result> {
+    this.id = id
+    return Promise.resolve(this.resutl)
   }
 }
