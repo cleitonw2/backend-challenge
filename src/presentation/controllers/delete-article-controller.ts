@@ -1,5 +1,5 @@
 import { DeleteArticle } from '@/domain/contracts'
-import { badRequest } from '../helpers'
+import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
 export class DeleteArticleController implements Controller {
@@ -9,11 +9,15 @@ export class DeleteArticleController implements Controller {
   ) {}
 
   async handle (request: DeleteArticleController.Params): Promise<HttpResponse> {
-    const { id } = request
-    const error = this.validation.validate({ id: +id })
-    if (error) return badRequest(error)
-    await this.deleteArticle.delete(+id)
-    return null as any
+    try {
+      const { id } = request
+      const error = this.validation.validate({ id: +id })
+      if (error) return badRequest(error)
+      await this.deleteArticle.delete(+id)
+      return ok('')
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 
