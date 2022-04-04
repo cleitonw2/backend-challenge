@@ -1,6 +1,6 @@
 import { UpdateArticleController } from '@/presentation/controllers'
 import { mockUpdateArticle } from '@/tests/domain/mocks'
-import { badRequest } from '@/presentation/helpers'
+import { badRequest, serverError } from '@/presentation/helpers'
 import { ValidationSpy, UpdateArticleSpy } from '../mocks'
 
 const mockRequest = (): UpdateArticleController.Params => ({
@@ -48,7 +48,12 @@ describe('UpdateArticle Controller', () => {
     expect(updateArticleSpy.params).toEqual({ id: +id, ...rest })
   })
 
-  it.todo('Should return 500 if UpdateArticle throws')
+  it('Should return 500 if UpdateArticle throws', async () => {
+    const { sut, updateArticleSpy } = makeSut()
+    jest.spyOn(updateArticleSpy, 'update').mockRejectedValueOnce(new Error())
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 
   it.todo('Should return 200 on success')
 })
