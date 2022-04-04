@@ -48,5 +48,9 @@ describe('DeleteArticle Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  it.todo('Should return 200 on success')
+  it('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({ id: '123454' })
+    expect(httpResponse.statusCode).toBe(200)
+  })
 })
