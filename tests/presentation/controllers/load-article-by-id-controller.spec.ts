@@ -1,18 +1,21 @@
 import { LoadArticleByIdController } from '@/presentation/controllers'
 import { badRequest } from '@/presentation/helpers'
-import { ValidationSpy } from '../mocks'
+import { ValidationSpy, LoadArticleByIdSpy } from '../mocks'
 
 type SutTypes = {
   sut: LoadArticleByIdController
   validationSpy: ValidationSpy
+  loadArticleByIdSpy: LoadArticleByIdSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new LoadArticleByIdController(validationSpy)
+  const loadArticleByIdSpy = new LoadArticleByIdSpy()
+  const sut = new LoadArticleByIdController(validationSpy, loadArticleByIdSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    loadArticleByIdSpy
   }
 }
 
@@ -30,7 +33,12 @@ describe('LoadArticleById Controller', () => {
     expect(httpResponse).toEqual(badRequest(new Error()))
   })
 
-  it.todo('Should call LoadArticleById with correct param')
+  it('Should call LoadArticleById with correct param', async () => {
+    const { sut, loadArticleByIdSpy } = makeSut()
+    const request = Math.random()
+    await sut.handle({ id: request.toString() })
+    expect(loadArticleByIdSpy.id).toBe(request)
+  })
 
   it.todo('Should return 400 if LoadArticleById fails')
 
