@@ -14,3 +14,7 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/articles?offset=22&limit=10
 Content-Type: application/json
+
+###
+GET http://localhost:3000/articles/1234
+Content-Type: application/json
