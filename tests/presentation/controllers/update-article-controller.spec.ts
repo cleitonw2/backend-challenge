@@ -30,7 +30,8 @@ describe('UpdateArticle Controller', () => {
     const { sut, validationSpy } = makeSut()
     const request = mockRequest()
     await sut.handle(request)
-    expect(validationSpy.input).toEqual(request)
+    const { id, ...rest } = request
+    expect(validationSpy.input).toEqual({ id: +id, ...rest })
   })
 
   it('Should return 400 if Validation return an error', async () => {

@@ -11,9 +11,9 @@ export class UpdateArticleController implements Controller {
 
   async handle (request: UpdateArticleController.Params): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(request)
-      if (error) return badRequest(error)
       const { id, ...rest } = request
+      const error = this.validation.validate({ id: +id, ...rest })
+      if (error) return badRequest(error)
       await this.updateArticle.update({ id: +id, ...rest })
       return ok('')
     } catch (error) {

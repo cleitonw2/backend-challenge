@@ -22,8 +22,9 @@ const makeSut = (): SutTypes => {
 describe('LoadArticleById Controller', () => {
   it('Should call Validation with correct param', async () => {
     const { sut, validationSpy } = makeSut()
-    await sut.handle({ id: '12345' })
-    expect(validationSpy.input).toEqual({ id: '12345' })
+    const id = Math.random()
+    await sut.handle({ id: id.toString() })
+    expect(validationSpy.input).toEqual({ id: id })
   })
 
   it('Should return 400 if Validation return an error', async () => {
@@ -35,9 +36,9 @@ describe('LoadArticleById Controller', () => {
 
   it('Should call LoadArticleById with correct param', async () => {
     const { sut, loadArticleByIdSpy } = makeSut()
-    const request = Math.random()
-    await sut.handle({ id: request.toString() })
-    expect(loadArticleByIdSpy.id).toBe(request)
+    const id = Math.random()
+    await sut.handle({ id: id.toString() })
+    expect(loadArticleByIdSpy.id).toBe(id)
   })
 
   it('Should return 500 if LoadArticleById throws', async () => {

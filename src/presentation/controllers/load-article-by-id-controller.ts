@@ -10,9 +10,10 @@ export class LoadArticleByIdController implements Controller {
 
   async handle (request: LoadArticleByIdController.Params): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(request)
+      const { id } = request
+      const error = this.validation.validate({ id: +id })
       if (error) return badRequest(error)
-      const article = await this.loadArticleById.load(+request.id)
+      const article = await this.loadArticleById.load(+id)
       return ok(article)
     } catch (error) {
       return serverError(error)
