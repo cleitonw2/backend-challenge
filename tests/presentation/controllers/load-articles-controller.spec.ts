@@ -3,8 +3,8 @@ import { serverError, ok } from '@/presentation/helpers'
 import { LoadArticlesSpy } from '../mocks'
 
 const mockRequest = (): LoadArticlesController.Params => ({
-  offset: 5,
-  limit: 20
+  offset: '5',
+  limit: '20'
 })
 
 type SutTypes = {
@@ -24,13 +24,14 @@ const makeSut = (): SutTypes => {
 describe('LoadArticles Controller', () => {
   it('Should call LoadArticles with correct params', async () => {
     const { sut, loadArticlesSpy } = makeSut()
-    await sut.handle(mockRequest())
-    expect(loadArticlesSpy.params).toEqual(mockRequest())
+    const { offset, limit } = mockRequest()
+    await sut.handle({ offset, limit })
+    expect(loadArticlesSpy.params).toEqual({ offset: +offset, limit: +limit })
   })
 
   it('Should call LoadArticles with correct params if empty request', async () => {
     const { sut, loadArticlesSpy } = makeSut()
-    await sut.handle()
+    await sut.handle({})
     expect(loadArticlesSpy.params).toEqual({ offset: 0, limit: 10 })
   })
 
