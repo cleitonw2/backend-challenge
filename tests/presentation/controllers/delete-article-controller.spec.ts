@@ -1,18 +1,21 @@
 import { DeleteArticleController } from '@/presentation/controllers'
 import { badRequest } from '@/presentation/helpers'
-import { ValidationSpy } from '../mocks'
+import { ValidationSpy, DeleteArticleSpy } from '../mocks'
 
 type SutTypes = {
   sut: DeleteArticleController
   validationSpy: ValidationSpy
+  deleteArticleSpy: DeleteArticleSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new DeleteArticleController(validationSpy)
+  const deleteArticleSpy = new DeleteArticleSpy()
+  const sut = new DeleteArticleController(validationSpy, deleteArticleSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    deleteArticleSpy
   }
 }
 
@@ -31,7 +34,12 @@ describe('DeleteArticle Controller', () => {
     expect(httpRequest).toEqual(badRequest(new Error()))
   })
 
-  it.todo('Should call DeleteArticle with correct param')
+  it('Should call DeleteArticle with correct param', async () => {
+    const { sut, deleteArticleSpy } = makeSut()
+    const id = Math.random()
+    await sut.handle({ id: id.toString() })
+    expect(deleteArticleSpy.id).toBe(id)
+  })
 
   it.todo('Should return 500 if DeleteArticle throws')
 

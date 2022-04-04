@@ -3,7 +3,8 @@ import {
   SaveArticle,
   SaveArticles,
   LoadArticleById,
-  UpdateArticle
+  UpdateArticle,
+  DeleteArticle
 } from '@/domain/contracts'
 import { Article } from '@/domain/models'
 import { mockArticle } from '@/tests/domain/mocks'
@@ -53,6 +54,15 @@ export class UpdateArticleSpy implements UpdateArticle {
 
   async update (data: UpdateArticle.Params): Promise<void> {
     this.params = data
+    Promise.resolve()
+  }
+}
+
+export class DeleteArticleSpy implements DeleteArticle {
+  id: number
+
+  async delete (id: number): Promise<void> {
+    this.id = id
     Promise.resolve()
   }
 }
