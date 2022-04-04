@@ -1,4 +1,5 @@
 import { DeleteArticleController } from '@/presentation/controllers'
+import { badRequest } from '@/presentation/helpers'
 import { ValidationSpy } from '../mocks'
 
 type SutTypes = {
@@ -23,7 +24,12 @@ describe('DeleteArticle Controller', () => {
     expect(validationSpy.input).toEqual({ id: +id })
   })
 
-  it.todo('Should return 400 if Validation return an error')
+  it('Should return 400 if Validation return an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.result = new Error()
+    const httpRequest = await sut.handle({ id: '1234' })
+    expect(httpRequest).toEqual(badRequest(new Error()))
+  })
 
   it.todo('Should call DeleteArticle with correct param')
 
