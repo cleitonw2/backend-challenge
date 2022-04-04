@@ -1,5 +1,4 @@
 import { UpdateArticle } from '@/domain/contracts'
-import { Article } from '@/domain/models'
 import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 
@@ -25,6 +24,20 @@ export class UpdateArticleController implements Controller {
 export namespace UpdateArticleController {
   export type Params = {
     id: string
-    article: Omit<Article, 'id'>
+    featured?: boolean
+    title: string
+    url: string
+    imageUrl: string
+    newsSite: string
+    summary?: string
+    publishedAt: string
+    launches: [{
+      id: string
+      provider?: string
+    }]
+    events: [{
+      id: number
+      provider?: string
+    }]
   }
 }

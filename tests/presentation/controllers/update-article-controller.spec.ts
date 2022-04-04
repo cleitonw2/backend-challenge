@@ -1,12 +1,15 @@
 import { UpdateArticleController } from '@/presentation/controllers'
-import { mockUpdateArticle } from '@/tests/domain/mocks'
+import { mockArticle } from '@/tests/domain/mocks'
 import { badRequest, serverError, ok } from '@/presentation/helpers'
 import { ValidationSpy, UpdateArticleSpy } from '../mocks'
 
-const mockRequest = (): UpdateArticleController.Params => ({
-  id: Math.random().toString(),
-  article: mockUpdateArticle()
-})
+const mockRequest = (): UpdateArticleController.Params => {
+  const { id, ...rest } = mockArticle()
+  return {
+    id: id.toString(),
+    ...rest
+  }
+}
 
 type SutTypes = {
   sut: UpdateArticleController

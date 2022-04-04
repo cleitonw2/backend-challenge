@@ -80,18 +80,16 @@ describe('ArticleMongoRepository', () => {
       const provider = Math.random().toString()
       await sut.update({
         id: article2.id,
-        article: {
-          title,
-          url,
-          imageUrl: 'any_img_url',
-          newsSite: 'any',
-          publishedAt: 'any',
-          launches: [{
-            id: 'any_id',
-            provider
-          }],
-          events: [{ id: 122 }]
-        }
+        title,
+        url,
+        imageUrl: 'any_img_url',
+        newsSite: 'any',
+        publishedAt: 'any',
+        launches: [{
+          id: 'any_id',
+          provider
+        }],
+        events: [{ id: 122 }]
       })
       const result = await articleCollection.findOne({ id: article2.id })
       expect(result.title).toBe(title)

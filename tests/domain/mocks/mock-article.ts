@@ -10,13 +10,3 @@ export const mockArticle = (): Article => ({
   launches: [{ id: 'any_id' }],
   events: [{ id: 122 }]
 })
-
-export const mockUpdateArticle = (): Omit<Article, 'id'> => ({
-  title: 'any_title',
-  url: 'any_url',
-  imageUrl: 'any_img_url',
-  newsSite: 'any',
-  publishedAt: 'any',
-  launches: [{ id: 'any_id' }],
-  events: [{ id: 122 }]
-})

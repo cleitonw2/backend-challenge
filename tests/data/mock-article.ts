@@ -8,7 +8,7 @@ import {
   GetAllArticlesApi,
   LoadDateOfLastArticleRepository
 } from '@/data/protocols'
-import { mockUpdateArticle, mockArticle } from '@/tests/domain/mocks'
+import { mockArticle } from '@/tests/domain/mocks'
 
 export class SaveArticlesRepositorySpy implements SaveArticlesRepository {
   params: SaveArticlesRepository.Params
@@ -54,10 +54,7 @@ export class DeleteArticleRepositorySpy implements DeleteArticleRepository {
 }
 
 export class UpdateArticleRepositorySpy implements UpdateArticleRepository {
-  params: UpdateArticleRepository.Params = {
-    id: 1,
-    article: mockUpdateArticle()
-  }
+  params: UpdateArticleRepository.Params = mockArticle()
 
   async update (data: UpdateArticleRepository.Params): Promise<void> {
     this.params = data

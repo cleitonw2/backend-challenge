@@ -47,12 +47,12 @@ LoadDateOfLastArticleRepository {
   }
 
   async update (data: UpdateArticleRepository.Params): Promise<void> {
-    const { id, article } = data
+    const { id, ...rest } = data
     const articleCollection = await MongoHelper.getCollection('articles')
     await articleCollection.updateOne({
       id
     }, {
-      $set: { ...article }
+      $set: { ...rest }
     })
   }
 

@@ -5,8 +5,5 @@ export interface UpdateArticleRepository {
 }
 
 export namespace UpdateArticleRepository {
-  export type Params = {
-    id: number
-    article: Omit<Article, 'id'>
-  }
+  export type Params = Article
 }
