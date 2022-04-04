@@ -1,5 +1,5 @@
 import { ValidationComposite, ValidateFieldType } from '@/validation'
 
-export const makeLoadArticleByIdValidation = (): ValidationComposite => {
+export const makeIdValidation = (): ValidationComposite => {
   return new ValidationComposite([new ValidateFieldType(['id'], 1)])
 }

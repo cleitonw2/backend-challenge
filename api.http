@@ -6,15 +6,17 @@ Content-Type: application/json
   "url": "any_url",
   "imageUrl": "any_image_url",
   "newsSite": "any",
-  "publishedAt": "2018-10-16T20:20:00.000Z",
+  "publishedAt": "2022-04-04T20:20:00.000Z",
   "launches": [],
   "events": []
 }
 
 ###
-GET http://localhost:3000/articles?offset=22&limit=10
+GET http://localhost:3000/articles?offset=0&limit=10
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/articles/1234
-Content-Type: application/json
+GET http://localhost:3000/articles/123342455123
+
+###
+DELETE http://localhost:3000/articles/123342455123
