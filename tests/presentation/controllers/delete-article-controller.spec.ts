@@ -1,5 +1,5 @@
 import { DeleteArticleController } from '@/presentation/controllers'
-import { badRequest } from '@/presentation/helpers'
+import { badRequest, serverError } from '@/presentation/helpers'
 import { ValidationSpy, DeleteArticleSpy } from '../mocks'
 
 type SutTypes = {
@@ -41,7 +41,12 @@ describe('DeleteArticle Controller', () => {
     expect(deleteArticleSpy.id).toBe(id)
   })
 
-  it.todo('Should return 500 if DeleteArticle throws')
+  it('Should return 500 if DeleteArticle throws', async () => {
+    const { sut, deleteArticleSpy } = makeSut()
+    jest.spyOn(deleteArticleSpy, 'delete').mockRejectedValueOnce(new Error())
+    const httpResponse = await sut.handle({ id: '123454' })
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 
   it.todo('Should return 200 on success')
 })
