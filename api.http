@@ -2,6 +2,7 @@ POST http://localhost:3000/articles
 Content-Type: application/json
 
 {
+  "id": 134123412343234,
   "title": "any_title",
   "url": "any_url",
   "imageUrl": "any_image_url",
@@ -16,7 +17,21 @@ GET http://localhost:3000/articles?offset=0&limit=10
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/articles/123342455123
+GET http://localhost:3000/articles/134123412343234
 
 ###
-DELETE http://localhost:3000/articles/123342455123
+DELETE http://localhost:3000/articles/134123412343234
+
+###
+PUT http://localhost:3000/articles/134123412343234
+Content-Type: application/json
+
+{
+  "title": "update_title",
+  "url": "update_url",
+  "imageUrl": "update_image_url",
+  "newsSite": "any",
+  "publishedAt": "2022-04-04T20:20:00.000Z",
+  "launches": [],
+  "events": []
+}
