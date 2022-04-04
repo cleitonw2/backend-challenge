@@ -1,5 +1,6 @@
 import { UpdateArticleController } from '@/presentation/controllers'
 import { mockUpdateArticle } from '@/tests/domain/mocks'
+import { badRequest } from '@/presentation/helpers'
 import { ValidationSpy } from '../mocks'
 
 const mockRequest = (): UpdateArticleController.Params => ({
@@ -21,7 +22,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('LoadArticleById Controller', () => {
+describe('UpdateArticle Controller', () => {
   it('Should call Validation with correct params', async () => {
     const { sut, validationSpy } = makeSut()
     const request = mockRequest()
@@ -29,7 +30,12 @@ describe('LoadArticleById Controller', () => {
     expect(validationSpy.input).toEqual(request)
   })
 
-  it.todo('Should return 400 if Validation return an error')
+  it('Should return 400 if Validation return an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.result = new Error()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(badRequest(new Error()))
+  })
 
   it.todo('Should call UpdateArticle with correct param')
 
