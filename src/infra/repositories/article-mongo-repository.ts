@@ -32,7 +32,7 @@ LoadDateOfLastArticleRepository {
   async loadById (id: number): Promise<Article> {
     const articleCollection = await MongoHelper.getCollection('articles')
     const article = await articleCollection.findOne({ id })
-    return MongoHelper.map(article)
+    return article && MongoHelper.map(article)
   }
 
   async loadDate (): Promise<string> {
