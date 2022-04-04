@@ -1,8 +1,10 @@
 import { Router } from 'express'
 import { adaptRoute } from './adapters'
-import { makeSaveArticleController } from './factories/controllers'
+import { makeSaveArticleController, makeLoadArticlesController } from './factories/controllers'
 
 const routes = Router()
+
+routes.get('/articles', adaptRoute(makeLoadArticlesController()))
 
 routes.post('/articles', adaptRoute(makeSaveArticleController()))
 

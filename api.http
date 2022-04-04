@@ -10,3 +10,7 @@ Content-Type: application/json
   "launches": [],
   "events": []
 }
+
+###
+GET http://localhost:3000/articles?offset=22&limit=10
+Content-Type: application/json
