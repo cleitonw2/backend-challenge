@@ -1,5 +1,5 @@
 import { LoadArticleByIdController } from '@/presentation/controllers'
-import { badRequest, serverError } from '@/presentation/helpers'
+import { badRequest, serverError, ok } from '@/presentation/helpers'
 import { ValidationSpy, LoadArticleByIdSpy } from '../mocks'
 
 type SutTypes = {
@@ -47,5 +47,9 @@ describe('LoadArticleById Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  it.todo('Should return 200 on success')
+  it('Should return 200 on success', async () => {
+    const { sut, loadArticleByIdSpy } = makeSut()
+    const httpResponse = await sut.handle({ id: '1234' })
+    expect(httpResponse).toEqual(ok(loadArticleByIdSpy.resutl))
+  })
 })
