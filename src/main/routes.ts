@@ -10,6 +10,10 @@ import { makeUpdateArticleController } from './factories/controllers/update-arti
 
 const routes = Router()
 
+routes.get('/', (req, res) => {
+  return res.json('Back-end Challenge 2021 🏅 - Space Flight News')
+})
+
 routes.get('/articles', adaptRoute(makeLoadArticlesController()))
 
 routes.get('/articles/:id', adaptRoute(makeLoadArticleByIdController()))
