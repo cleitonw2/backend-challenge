@@ -3,8 +3,8 @@ import { LoadArticlesRepository } from '@/data/protocols'
 import { LoadArticlesRepositorySpy } from './mock-article'
 
 const mockParams = (): LoadArticlesRepository.Params => ({
-  offset: 1,
-  limit: 10
+  offset: 5,
+  limit: 20
 })
 
 type Sut = {
@@ -22,11 +22,17 @@ const makeSut = (): Sut => {
 }
 
 describe('DbLoadArticles UseCase', () => {
-  it('Should call LoadArticlesRepository', async () => {
+  it('Should call LoadArticlesRepository with correct params', async () => {
     const { sut, loadArticlesRepositorySpy } = makeSut()
     const params = mockParams()
     await sut.load(params)
     expect(loadArticlesRepositorySpy.params).toEqual(params)
+  })
+
+  it('Should call LoadArticlesRepository with correct params if empty data', async () => {
+    const { sut, loadArticlesRepositorySpy } = makeSut()
+    await sut.load({})
+    expect(loadArticlesRepositorySpy.params).toEqual({ offset: 0, limit: 10 })
   })
 
   it('Should throw if LoadArticlesRepository throws', () => {

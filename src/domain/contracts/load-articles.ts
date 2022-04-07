@@ -6,8 +6,8 @@ export interface LoadArticles {
 
 export namespace LoadArticles {
   export type Params = {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   export type Result = Article[]
 }

@@ -29,12 +29,6 @@ describe('LoadArticles Controller', () => {
     expect(loadArticlesSpy.params).toEqual({ offset: +offset, limit: +limit })
   })
 
-  it('Should call LoadArticles with correct params if empty request', async () => {
-    const { sut, loadArticlesSpy } = makeSut()
-    await sut.handle({})
-    expect(loadArticlesSpy.params).toEqual({ offset: 0, limit: 10 })
-  })
-
   it('Should return 500 if LoadArticles throws', async () => {
     const { sut, loadArticlesSpy } = makeSut()
     jest.spyOn(loadArticlesSpy, 'load').mockRejectedValueOnce(new Error())

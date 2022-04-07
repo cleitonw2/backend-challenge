@@ -8,8 +8,7 @@ export class LoadArticlesController implements Controller {
   async handle (request: LoadArticlesController.Params): Promise<HttpResponse> {
     try {
       const { offset, limit } = request
-      const params = !offset || !limit ? { offset: 0, limit: 10 } : { offset: +offset, limit: +limit }
-      const articles = await this.loadArticles.load(params)
+      const articles = await this.loadArticles.load({ offset: +offset, limit: +limit })
       return ok(articles)
     } catch (error) {
       return serverError(error)
