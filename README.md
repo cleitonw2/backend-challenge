@@ -27,4 +27,11 @@ $ npm run test:unit
 $ npm run test:integration
 $ npm run test:verbose
 ```
-Para acessar a documentação digite no browser http://localhost:3000/api-docs/.
+## Rodando com o docker
+```bash
+$ docker-compose up -d
+$ docker-compose donw
+```
+
+## Documentação
+Para acessar a documentação digite no browser http://localhost:3000/api-docs/
