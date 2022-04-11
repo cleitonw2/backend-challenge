@@ -27,4 +27,4 @@ $ npm run test:unit
 $ npm run test:integration
 $ npm run test:verbose
 ```
-Depois de iniciar o servidor va para o arquivo api.http que está na raiz do projeto, lá tem todas as rotas.
+Para acessar a documentação digite no browser http://localhost:3000/api-docs/.
