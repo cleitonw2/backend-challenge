@@ -1,4 +1,4 @@
-import { LoadArticles } from '@/domain/contracts'
+import { LoadArticles } from '@/domain/usecases'
 import { LoadArticlesRepository } from '@/data/protocols'
 
 export class DbLoadArticles implements LoadArticles {

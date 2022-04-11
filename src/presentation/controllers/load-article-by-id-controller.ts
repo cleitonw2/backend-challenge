@@ -1,4 +1,4 @@
-import { LoadArticleById } from '@/domain/contracts'
+import { LoadArticleById } from '@/domain/usecases'
 import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 

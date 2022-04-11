@@ -1,4 +1,4 @@
-import { DeleteArticle } from '@/domain/contracts'
+import { DeleteArticle } from '@/domain/usecases'
 import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 

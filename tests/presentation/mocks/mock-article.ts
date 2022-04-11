@@ -5,7 +5,7 @@ import {
   LoadArticleById,
   UpdateArticle,
   DeleteArticle
-} from '@/domain/contracts'
+} from '@/domain/usecases'
 import { Article } from '@/domain/models'
 import { mockArticle } from '@/tests/domain/mocks'
 

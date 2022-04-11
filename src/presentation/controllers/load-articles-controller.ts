@@ -1,4 +1,4 @@
-import { LoadArticles } from '@/domain/contracts'
+import { LoadArticles } from '@/domain/usecases'
 import { ok, serverError } from '../helpers'
 import { Controller, HttpResponse } from '../protocols'
 

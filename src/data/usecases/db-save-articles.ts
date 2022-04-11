@@ -1,4 +1,4 @@
-import { SaveArticles } from '@/domain/contracts'
+import { SaveArticles } from '@/domain/usecases'
 import {
   CountArticlesRepository,
   GetAllArticlesApi,

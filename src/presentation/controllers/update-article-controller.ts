@@ -1,4 +1,4 @@
-import { UpdateArticle } from '@/domain/contracts'
+import { UpdateArticle } from '@/domain/usecases'
 import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'
 

@@ -1,4 +1,4 @@
-import { SaveArticles } from '@/domain/contracts'
+import { SaveArticles } from '@/domain/usecases'
 import { DbSaveArticles } from '@/data/usecases'
 import { ArticleMongoRepository } from '@/infra/repositories'
 import { ArticleApi } from '@/infra/api'

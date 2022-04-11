@@ -1,4 +1,4 @@
-import { LoadArticleById } from '@/domain/contracts'
+import { LoadArticleById } from '@/domain/usecases'
 import { Article } from '@/domain/models'
 import { LoadArticleByIdRepository } from '../protocols/load-article-by-id-repository'
 

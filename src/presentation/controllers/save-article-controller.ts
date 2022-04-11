@@ -1,4 +1,4 @@
-import { SaveArticle } from '@/domain/contracts'
+import { SaveArticle } from '@/domain/usecases'
 import { Article } from '@/domain/models'
 import { badRequest, ok, serverError } from '../helpers'
 import { Controller, HttpResponse, Validation } from '../protocols'

@@ -1,4 +1,4 @@
-import { LoadArticles } from '@/domain/contracts'
+import { LoadArticles } from '@/domain/usecases'
 import { DbLoadArticles } from '@/data/usecases'
 import { ArticleMongoRepository } from '@/infra/repositories'
 

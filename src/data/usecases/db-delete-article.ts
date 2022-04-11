@@ -1,4 +1,4 @@
-import { DeleteArticle } from '@/domain/contracts'
+import { DeleteArticle } from '@/domain/usecases'
 import { DeleteArticleRepository } from '../protocols'
 
 export class DbDeleteArticle implements DeleteArticle {

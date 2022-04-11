@@ -1,4 +1,4 @@
-import { UpdateArticle } from '@/domain/contracts'
+import { UpdateArticle } from '@/domain/usecases'
 import { UpdateArticleRepository } from '@/data/protocols'
 
 export class DbUpdateArticle implements UpdateArticle {

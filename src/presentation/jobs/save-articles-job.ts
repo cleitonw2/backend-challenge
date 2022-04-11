@@ -1,4 +1,4 @@
-import { SaveArticles } from '@/domain/contracts'
+import { SaveArticles } from '@/domain/usecases'
 import { Job } from '@/presentation/protocols'
 
 export class SaveArticlesJob implements Job {
