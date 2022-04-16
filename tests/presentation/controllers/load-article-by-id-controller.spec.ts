@@ -1,5 +1,5 @@
 import { LoadArticleByIdController } from '@/presentation/controllers'
-import { badRequest, serverError, ok } from '@/presentation/helpers'
+import { badRequest, ok } from '@/presentation/helpers'
 import { ValidationSpy, LoadArticleByIdSpy } from '../mocks'
 
 type SutTypes = {
@@ -45,7 +45,7 @@ describe('LoadArticleById Controller', () => {
     const { sut, loadArticleByIdSpy } = makeSut()
     jest.spyOn(loadArticleByIdSpy, 'load').mockRejectedValueOnce(new Error())
     const httpResponse = await sut.handle({ id: '1234' })
-    expect(httpResponse).toEqual(serverError(new Error()))
+    expect(httpResponse.statusCode).toBe(500)
   })
 
   it('Should return 200 on success', async () => {

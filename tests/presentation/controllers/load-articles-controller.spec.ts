@@ -1,5 +1,5 @@
 import { LoadArticlesController } from '@/presentation/controllers'
-import { serverError, ok } from '@/presentation/helpers'
+import { ok } from '@/presentation/helpers'
 import { LoadArticlesSpy } from '../mocks'
 
 const mockRequest = (): LoadArticlesController.Params => ({
@@ -33,7 +33,7 @@ describe('LoadArticles Controller', () => {
     const { sut, loadArticlesSpy } = makeSut()
     jest.spyOn(loadArticlesSpy, 'load').mockRejectedValueOnce(new Error())
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(serverError(new Error()))
+    expect(httpResponse.statusCode).toBe(500)
   })
 
   it('Should return 200 on success', async () => {
